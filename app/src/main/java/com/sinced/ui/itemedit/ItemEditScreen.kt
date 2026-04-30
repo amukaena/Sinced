@@ -11,7 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
@@ -64,7 +64,7 @@ fun ItemEditScreen(
                 title = { Text(if (state.isNew) "항목 추가" else "항목 편집") },
                 navigationIcon = {
                     IconButton(onClick = onClose) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "닫기")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "닫기")
                     }
                 },
                 actions = {

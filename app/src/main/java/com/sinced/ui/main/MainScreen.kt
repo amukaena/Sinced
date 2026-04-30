@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -38,6 +39,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sinced.R
 import com.sinced.SincedApplication
+import com.sinced.domain.filter.CycleFilter
 import com.sinced.ui.common.SincedViewModelFactory
 import com.sinced.ui.main.components.FilterBar
 import com.sinced.ui.main.components.ItemCard
@@ -65,6 +67,9 @@ fun MainScreen(
                 title = { Text(stringResource(R.string.app_name)) },
                 actions = {
                     IconButton(onClick = onManageCategories) {
+                        Icon(Icons.AutoMirrored.Filled.List, contentDescription = "카테고리 관리")
+                    }
+                    IconButton(onClick = onOpenSettings) {
                         Icon(Icons.Default.Settings, contentDescription = "설정")
                     }
                 }
@@ -92,10 +97,11 @@ fun MainScreen(
             )
 
             if (state.items.isEmpty() && !state.isLoading) {
+                val isUnfiltered = state.filter.categoryIds.isEmpty() &&
+                    state.filter.cycle == CycleFilter.ALL
                 EmptyState(
-                    text = if (state.filter.categoryIds.isEmpty()
-                        && state.filter.cycle.name == "ALL"
-                    ) "첫 항목을 추가해보세요" else "조건에 맞는 항목이 없습니다"
+                    text = if (isUnfiltered) "첫 항목을 추가해보세요"
+                    else "조건에 맞는 항목이 없습니다"
                 )
             } else {
                 LazyColumn(
